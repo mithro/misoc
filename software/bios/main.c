@@ -528,19 +528,19 @@ static int test_user_abort(void)
 static void boot_sequence(void)
 {
 	if(test_user_abort()) {
+#ifdef ROM_BOOT_ADDRESS
+		romboot();
+#endif
 #ifdef FLASH_BOOT_ADDRESS
 		flashboot();
 #endif
-		serialboot();
 #ifdef CSR_ETHMAC_BASE
 #ifdef CSR_ETHPHY_MODE_DETECTION_MODE_ADDR
 		eth_mode();
 #endif
 		netboot();
 #endif
-#ifdef ROM_BOOT_ADDRESS
-		romboot();
-#endif
+		serialboot();
 		printf("No boot medium found\n");
 	}
 }
